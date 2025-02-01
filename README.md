@@ -22,12 +22,12 @@ Create environment files from the examples:
 
 For the backend:
 ```bash
-cp server/.env.example server/.env
+cp server/env.example server/.env
 ```
 
 For the frontend:
 ```bash
-cp frontend/.env.example frontend/.env
+cp frontend/env.example frontend/.env
 ```
 
 **Important**: Make sure the following values match between frontend and backend:
