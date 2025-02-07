@@ -4,8 +4,10 @@ import { getStationById, updateStation } from "@/actions/stationAction"
 import { redirect } from "next/navigation"
 import { UpdateStationDto } from "@/packages/types/api"
 
-export default async function EditStationPage({ params }: { params: { id: string } }) {
-  const station = await getStationById(params.id)
+export default async function EditStationPage({ params }: { params: Promise<{ id: string }> }) {
+
+  const { id } = await params
+  const station = await getStationById(id)
 
   if (!station) {
     return <div>Station not found</div>
@@ -13,7 +15,7 @@ export default async function EditStationPage({ params }: { params: { id: string
 
   const handleSubmit = async (data: UpdateStationDto) => {
     'use server'
-    await updateStation(params.id, data)
+    await updateStation(id, data)
     redirect('/admin/stations')
   }
 

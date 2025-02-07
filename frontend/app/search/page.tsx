@@ -4,21 +4,21 @@ import { getTrains } from "@/actions/trainAction"
 import { Loader2 } from "lucide-react"
 import { Suspense } from "react"
 
-interface SearchPageProps {
-  searchParams: {
+type SearchPageProps = {
+  searchParams: Promise<{
     from?: string
     to?: string
     date?: string
-  }
+  }>
 }
 
 async function TrainResults({ searchParams }: { searchParams: SearchPageProps['searchParams'] }) {
-
-  const formattedDate = searchParams.date ? new Date(searchParams.date).toISOString() : undefined;
+  const params = await searchParams
+  const formattedDate = params.date ? new Date(params.date).toISOString() : undefined;
   
   const trains = await getTrains(
-    searchParams.from ? parseInt(searchParams.from) : undefined,
-    searchParams.to ? parseInt(searchParams.to) : undefined,
+    params.from ? parseInt(params.from) : undefined,
+    params.to ? parseInt(params.to) : undefined,
     formattedDate
   )
 
@@ -71,7 +71,7 @@ async function TrainResults({ searchParams }: { searchParams: SearchPageProps['s
   )
 }
 
-export default function TrainSearchResults({ searchParams }: SearchPageProps) {
+export default async function TrainSearchResults({ searchParams }: SearchPageProps) {
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-4xl font-bold mb-8">Train Search Results</h1>

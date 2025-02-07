@@ -2,7 +2,7 @@ import { getRouteById } from "@/actions/routeAction"
 import { RouteForm } from "@/components/forms/RouteForm"
 import { notFound } from "next/navigation"
 
-export default async function RouteEditPage({ params }: { params: { id: string } }) {
+export default async function RouteEditPage({ params }: { params: Promise<{ id: string }>}) {
 
   const { id } = await params
 

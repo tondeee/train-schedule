@@ -3,10 +3,13 @@ import { getAllRoutes } from "@/actions/routeAction"
 import { TrainForm } from "@/components/forms/TrainForm"
 import { notFound } from "next/navigation"
 
-export default async function TrainEditPage({ params }: { params: { id: string } }) {
+export default async function TrainEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  
   try {
+
     const [trainResult, routesResult] = await Promise.all([
-      getTrain(params.id),
+      getTrain(id),
       getAllRoutes(1, 100) 
     ])
     
